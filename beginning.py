@@ -7,7 +7,7 @@ def introduction():
     while True:
         choice = input("Do you want to read the full rules: (Y)es or (N)o: ").lower()
         if choice in ["y", "yes"]:
-            print("Full rules")
+            print("Full rules - yet to be added!")
             break
         elif choice in ["n", "no"]:
             break

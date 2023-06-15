@@ -14,7 +14,7 @@ dominoes_pool = {
 
 board = deque()
 
-# introduction()
+introduction()
 player_tiles, computer_tiles = initial_tiles_deal(dominoes_pool)
 
 print("\nThese are your initial tiles:", list(player_tiles.values()))
