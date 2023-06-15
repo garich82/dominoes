@@ -18,6 +18,7 @@ def player_turn(player_tiles, board, dominoes_pool, skip_turn):
 
                 if not board or any(player_digit in board_end_numbers for player_digit in player_digits):
                     tile_placement(player_selection, board, player_tiles)
+                    del player_tiles[player_selection]
                     skip_turn[0] = 0
                     break
 
@@ -88,22 +89,14 @@ def handle_empty_board_placement(player_selection, board, player_tiles):
 
 
 def place_tile_at_beginning(player_selection, board, player_tiles, board_begin):
-    player_tile = get_player_tile(player_selection, player_tiles)
+    player_tile = player_tiles[player_selection]
     if player_tile[0] == board_begin:
         player_tile = [player_tile[1], player_tile[0]]
     board.appendleft(player_tile)
-    del player_tiles[player_selection]
 
 
 def place_tile_at_end(player_selection, board, player_tiles, board_end):
-    player_tile = get_player_tile(player_selection, player_tiles)
+    player_tile = player_tiles[player_selection]
     if player_tile[1] == board_end:
         player_tile = [player_tile[1], player_tile[0]]
     board.append(player_tile)
-    del player_tiles[player_selection]
-
-
-def get_player_tile(player_selection, player_tiles):
-    return player_tiles[player_selection]
-
-

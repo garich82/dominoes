@@ -2,6 +2,7 @@ from beginning import initial_tiles_deal, introduction, coin_toss
 from player_turn import player_turn
 from computer_turn import computer_turn
 from collections import deque
+from helper_functions import checking_who_won
 
 
 dominoes_pool = {
@@ -30,24 +31,15 @@ def play_game():
             turn.rotate()
         else:
             computer_turn(computer_tiles, board, dominoes_pool, skip_turn)
+            print(f"Computer has {len(computer_tiles)} tiles in his hand!")
             turn.rotate()
 
         if skip_turn[0] == 2:
             print("\nBoth players can't draw anymore. Counting the remaining tiles to determine winner ...")
             break
 
-    player_tiles_count = len(player_tiles)
-    computer_tiles_count = len(computer_tiles)
+    checking_who_won(player_tiles, computer_tiles)
 
-    if computer_tiles_count == 0:
-        print("Computer has no more tiles. You lost!")
-    elif player_tiles_count == 0:
-        print("You have no more tiles. Computer lost!")
-    elif player_tiles_count > computer_tiles_count:
-        print(f"Tiles remaining - Player: {player_tiles_count}, Computer: {computer_tiles_count}. You lost!")
-    elif computer_tiles_count > player_tiles_count:
-        print(f"Tiles remaining - Player: {player_tiles_count}, Computer: {computer_tiles_count}. You lost!")
-    else:
-        print(f"Both player and computer has {player_tiles_count} tiles remaining. Game ends in a draw!")
 
 play_game()
+
