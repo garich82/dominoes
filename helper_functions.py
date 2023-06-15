@@ -22,6 +22,6 @@ def checking_who_won(player_tiles, computer_tiles):
     elif player_tiles_count > computer_tiles_count:
         print(f"Tiles remaining - Player: {player_tiles_count}, Computer: {computer_tiles_count}. You lost!")
     elif computer_tiles_count > player_tiles_count:
-        print(f"Tiles remaining - Player: {player_tiles_count}, Computer: {computer_tiles_count}. You lost!")
+        print(f"Tiles remaining - Player: {player_tiles_count}, Computer: {computer_tiles_count}. You won!")
     else:
         print(f"Both player and computer has {player_tiles_count} tiles remaining. Game ends in a draw!")
