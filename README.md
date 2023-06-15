@@ -1,2 +1,4 @@
 # dominoes
-A sample dominoes game
+A simple dominoes game.
+
+Practicing modules.
