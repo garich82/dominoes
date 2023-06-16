@@ -10,7 +10,7 @@ def computer_turn(computer_tiles, board, dominoes_pool, skip_turn):
         computer_selection = computer_selecting_tile(computer_tiles, board)
         tile_placement(computer_selection, board, computer_tiles)
         computer_tile = computer_tiles[computer_selection]
-        print(f"Computer placed tile {computer_tile}")
+        print(f"\nComputer placed tile {computer_tile}")
         del computer_tiles[computer_selection]
         skip_turn[0] = 0
 
@@ -49,7 +49,6 @@ def has_multiple_placement_options(computer_digits, board_begin, board_end):
 
 
 def handle_multiple_placement_options(computer_selection, board, computer_tiles, board_begin, board_end):
-    print("\nComputer has a choice to place the selected tile in the beginning or the end of the board")
     if rd.choice([True, False]):
         place_tile_at_beginning(computer_selection, board, computer_tiles, board_begin)
     else:
@@ -57,7 +56,6 @@ def handle_multiple_placement_options(computer_selection, board, computer_tiles,
 
 
 def handle_single_placement_option(player_selection, board, computer_tiles, board_begin, board_end, computer_digits):
-    print("\nComputer has only one possible place for his tile!")
     if board_begin in computer_digits:
         place_tile_at_beginning(player_selection, board, computer_tiles, board_begin)
     else:
@@ -65,7 +63,6 @@ def handle_single_placement_option(player_selection, board, computer_tiles, boar
 
 
 def handle_empty_board_placement(computer_selection, board, player_tiles):
-    print("\nBoard is empty, so computer places his selected tile in the middle!")
     place_tile_at_end(computer_selection, board, player_tiles, None)
 
 

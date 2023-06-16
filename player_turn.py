@@ -1,5 +1,6 @@
 import random as rd
 from helper_functions import board_ends, print_board
+import error_messages
 
 
 def player_turn(player_tiles, board, dominoes_pool, skip_turn):
@@ -7,8 +8,9 @@ def player_turn(player_tiles, board, dominoes_pool, skip_turn):
     board_end_numbers = board_ends(board) if board else None
 
     while True:
-        print(f"\nThese are your tiles: {list(player_tiles.values())}")
+        print()
         print_board(board)
+        print(f"These are your tiles: {' '.join(map(str, player_tiles.values()))}")
 
         if not board or any(num in board_end_numbers for num in player_tiles_numbers):
             player_selection = input("Please select a tile which you wish to place: ")
@@ -22,12 +24,12 @@ def player_turn(player_tiles, board, dominoes_pool, skip_turn):
                     skip_turn[0] = 0
                     break
 
-                print("You can't place that tile, but you have other tile(s) that you can place. Choose again!")
+                error_messages.error_wrong_tile()
             else:
-                print("You have to type the value of the tile, for example for tile [0, 1] you have to enter '01'!")
+                error_messages.error_typo_tile()
         else:
             if not dominoes_pool:
-                print("The dominoes pool is empty. No tiles can be drawn.")
+                error_messages.error_empty_pool()
                 skip_turn[0] += 1
                 break
 
@@ -35,7 +37,8 @@ def player_turn(player_tiles, board, dominoes_pool, skip_turn):
             new_tile_key, new_tile_value = rd.choice(list(dominoes_pool.items()))
             del dominoes_pool[new_tile_key]
             player_tiles[new_tile_key] = new_tile_value
-            print(f"Your new tile is {new_tile_value}")
+            print(f"Your new tile is {new_tile_value}. ", end="")
+            input("Press [ENTER] to continue!")
             break
 
 
@@ -62,9 +65,9 @@ def has_multiple_placement_options(player_digits, board_begin, board_end):
 
 
 def handle_multiple_placement_options(player_selection, board, player_tiles, board_begin, board_end):
-    print("You have a choice to place your tile in the beginning or end of the board")
+    print("You have a choice to place your tile in the beginning or the end of the board.", end=" ")
     while True:
-        which_end = input("Please choose (L)eft end or (R)ight end: ").lower()
+        which_end = input("Please choose (L)eft or (R)ight: ").lower()
         if which_end in ["l", "left"]:
             place_tile_at_beginning(player_selection, board, player_tiles, board_begin)
             break
@@ -72,11 +75,10 @@ def handle_multiple_placement_options(player_selection, board, player_tiles, boa
             place_tile_at_end(player_selection, board, player_tiles, board_end)
             break
         else:
-            print("That's not a valid choice! Please type l for Left or r for Right")
+            error_messages.error_left_right_only()
 
 
 def handle_single_placement_option(player_selection, board, player_tiles, board_begin, board_end, player_digits):
-    print("You have only one possible place for your tile!")
     if board_begin in player_digits:
         place_tile_at_beginning(player_selection, board, player_tiles, board_begin)
     else:
@@ -84,7 +86,6 @@ def handle_single_placement_option(player_selection, board, player_tiles, board_
 
 
 def handle_empty_board_placement(player_selection, board, player_tiles):
-    print("Board is empty, so you place your selected tile in the middle!")
     place_tile_at_end(player_selection, board, player_tiles, None)
 
 
@@ -93,6 +94,7 @@ def place_tile_at_beginning(player_selection, board, player_tiles, board_begin):
     if player_tile[0] == board_begin:
         player_tile = [player_tile[1], player_tile[0]]
     board.appendleft(player_tile)
+    print_board(board)
 
 
 def place_tile_at_end(player_selection, board, player_tiles, board_end):
@@ -100,3 +102,4 @@ def place_tile_at_end(player_selection, board, player_tiles, board_end):
     if player_tile[1] == board_end:
         player_tile = [player_tile[1], player_tile[0]]
     board.append(player_tile)
+    print_board(board)
